@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>خلاصهٔ رنگی batchexecute — Google Photos</title>
+  <style>
+    body{font-family: system-ui, 'Segoe UI', Roboto, Arial; line-height:1.5; padding:20px; background:#f7f9fc; color:#112;}
+    .k{background:#fff; border-radius:8px; padding:18px; box-shadow:0 2px 10px rgba(17,24,39,0.06); max-width:900px; margin:0 auto}
+    h1{font-size:18px; margin:0 0 12px}
+    .label{font-weight:700}
+    .blue{color:#1565c0}
+    .green{color:#2e7d32}
+    .orange{color:#f57c00}
+    .red{color:#d32f2f}
+    .info{color:#1565c0}
+    ul{margin:6px 0 6px 1.2em}
+    code{background:#f2f4f8;padding:2px 6px;border-radius:4px;font-family:monospace}
+  </style>
+</head>
+<body>
+  <div class="k">
+    <h1>خلاصهٔ رنگیِ درخواست <code>batchexecute</code> (نمایشِ سریع)</h1>
+
+    <div><span class="label blue">URL:</span> <span class="info">https://photos.google.com/_/PhotosUi/data/batchexecute?...(VrseUb)</span></div>
+    <div style="margin-top:8px"><span class="label green">Status:</span> <span class="green">200 OK 🟢</span></div>
+
+    <div style="margin-top:10px"><span class="label blue">Purpose:</span> <span class="info">دریافت متادیتا و لینک‌های مستقیم تصویر (media URLs)</span></div>
+
+    <div style="margin-top:10px"><span class="label orange">Timing:</span>
+      <ul>
+        <li><span class="orange">Total duration:</span> <strong>442 ms</strong> 🟠</li>
+        <li><span class="red">TTFB (waiting):</span> <strong>352 ms</strong> 🔴 (بخش عمدهٔ تأخیر)</li>
+        <li><span class="green">Download:</span> <strong>30 ms</strong> 🟢</li>
+      </ul>
+    </div>
+
+    <div style="margin-top:10px"><span class="label blue">Response headers (نکات):</span>
+      <ul>
+        <li><span class="red">cache-control: no-cache, no-store, must-revalidate</span> 🔴 — مانعِ کش مرورگر؛ احتمالا به‌خاطر توکن/امنیت</li>
+        <li><span class="green">content-encoding: br</span> 🟢 — فشرده‌سازی خوب</li>
+        <li><span class="green">content-type: application/json; charset=utf-8</span> 🟢</li>
+        <li><span class="info">content-disposition: attachment; filename="response.bin"</span> 🔵 — پاسخ باینری/فشرده‌شده</li>
+      </ul>
+    </div>
+
+    <div style="margin-top:10px"><span class="label blue">Payload (خلاصه):</span> حاوی لینک‌های <code>usercontent.google.com</code>، ابعاد تصویر (مثلاً 1080×2284) و داده‌های مالک 🟢</div>
+
+    <div style="margin-top:12px"><strong>توصیه‌ها:</strong>
+      <ul>
+        <li><span class="red">اگر امکان دارد، TTFB را با بهینه‌سازی بک‌اند/کوئری‌ها یا استفاده از کش سمت سرور کاهش دهید.</span></li>
+        <li><span class="red">بررسی نیاز به <code>no-store</code> برای این endpoint — اگر توکن‌ها کوتاه‌مدت هستند، ممکن است قابل تغییر نباشد.</span></li>
+        <li><span class="green">از فشرده‌سازی (Brotli) و انتقال کم‌حجم استفاده شده — این نکته مثبت است.</span></li>
+      </ul>
+    </div>
+
+    <div style="margin-top:12px; font-size:90%" class="info">کار بعدی پیشنهادی: می‌توانم همین خروجی را به‌صورت یک فایل HTML بسازم تا در مرورگر باز کنید (همین فایل ایجاد شد) یا تحلیل زمان سرور را عمیق‌تر ادامه دهم.</div>
+  </div>
+</body>
+</html>
