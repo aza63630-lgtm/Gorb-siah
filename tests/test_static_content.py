@@ -41,6 +41,13 @@ class StaticContentTests(unittest.TestCase):
         self.assertIn("--entrypoint /bin/bash", workflow)
         self.assertIn("jekyll build --future --destination /srv/jekyll/_site", workflow)
 
+    def test_ci_runs_for_every_push_and_pull_request(self):
+        workflow = WORKFLOW.read_text(encoding="utf-8")
+
+        self.assertIn("  push:\n  pull_request:", workflow)
+        self.assertNotIn("branches:", workflow)
+        self.assertIn("contents: read", workflow)
+
     def test_summary_has_persian_right_to_left_document_metadata(self):
         parser = DocumentParser()
         parser.feed(SUMMARY.read_text(encoding="utf-8"))
