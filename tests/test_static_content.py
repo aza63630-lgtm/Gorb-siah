@@ -2,12 +2,15 @@
 
 from html.parser import HTMLParser
 from pathlib import Path
+import subprocess
+import sys
+import tempfile
 import unittest
 
 
 ROOT = Path(__file__).resolve().parents[1]
 SUMMARY = ROOT / "devtools_batchexecute_summary.html"
-WORKFLOW = ROOT / ".github" / "workflows" / "jekyll-docker.yml"
+BUILD_SCRIPT = ROOT / "scripts" / "build_site.py"
 SENSITIVE_MARKERS = (
     "f.sid=",
     "authuser=",
@@ -30,22 +33,19 @@ class DocumentParser(HTMLParser):
 
 
 class StaticContentTests(unittest.TestCase):
-    def test_jekyll_container_build_has_a_writable_runtime_home(self):
-        workflow = WORKFLOW.read_text(encoding="utf-8")
+    def test_build_script_creates_the_site_entrypoint(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory)
+            subprocess.run(
+                [sys.executable, BUILD_SCRIPT, "--output", output],
+                check=True,
+                cwd=ROOT,
+            )
 
-        self.assertIn("--workdir /srv/jekyll", workflow)
-        self.assertIn("--env HOME=/tmp", workflow)
-        self.assertIn("--env BUNDLE_USER_HOME=/tmp/bundle", workflow)
-        self.assertIn("--env JEKYLL_CACHE_DIR=/tmp/jekyll-cache", workflow)
-        self.assertIn("--entrypoint /bin/bash", workflow)
-        self.assertIn("jekyll build --future --destination /srv/jekyll/_site", workflow)
-
-    def test_ci_runs_for_every_push_and_pull_request(self):
-        workflow = WORKFLOW.read_text(encoding="utf-8")
-
-        self.assertIn("  push:\n  pull_request:", workflow)
-        self.assertNotIn("branches:", workflow)
-        self.assertIn("contents: read", workflow)
+            self.assertEqual(
+                SUMMARY.read_text(encoding="utf-8"),
+                (output / "index.html").read_text(encoding="utf-8"),
+            )
 
     def test_summary_has_persian_right_to_left_document_metadata(self):
         parser = DocumentParser()

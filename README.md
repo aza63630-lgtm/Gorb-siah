@@ -12,4 +12,5 @@ Run the static-content checks locally with:
 
 ```sh
 PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -v
+python scripts/build_site.py
 ```
