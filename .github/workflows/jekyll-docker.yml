@@ -13,8 +13,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Validate static content
+      run: python -m unittest discover -s tests -v
     - name: Build the site in the jekyll/builder container
       run: |
-        docker run \
+        docker run --rm \
+        --user "$(id -u):$(id -g)" \
         -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
-        jekyll/builder:latest /bin/bash -c "chmod -R 777 /srv/jekyll && jekyll build --future"
+        jekyll/builder:4.2.2 jekyll build --future
