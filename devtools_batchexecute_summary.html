@@ -22,7 +22,7 @@
   <div class="k">
     <h1>خلاصهٔ رنگیِ درخواست <code>batchexecute</code> (نمایشِ سریع)</h1>
 
-    <div><span class="label blue">URL:</span> <span class="info">https://photos.google.com/_/PhotosUi/data/batchexecute?...(VrseUb)</span></div>
+    <div><span class="label blue">URL:</span> <span class="info">/_/PhotosUi/data/batchexecute?rpcids=VrseUb&hellip;</span></div>
     <div style="margin-top:8px"><span class="label green">Status:</span> <span class="green">200 OK 🟢</span></div>
 
     <div style="margin-top:10px"><span class="label blue">Purpose:</span> <span class="info">دریافت متادیتا و لینک‌های مستقیم تصویر (media URLs)</span></div>
@@ -40,11 +40,11 @@
         <li><span class="red">cache-control: no-cache, no-store, must-revalidate</span> 🔴 — مانعِ کش مرورگر؛ احتمالا به‌خاطر توکن/امنیت</li>
         <li><span class="green">content-encoding: br</span> 🟢 — فشرده‌سازی خوب</li>
         <li><span class="green">content-type: application/json; charset=utf-8</span> 🟢</li>
-        <li><span class="info">content-disposition: attachment; filename="response.bin"</span> 🔵 — پاسخ باینری/فشرده‌شده</li>
+        <li><span class="info">content-disposition: attachment; filename="response.bin"</span> 🔵 — پاسخ به‌صورت فایل پیوست با این نام ارائه شده است؛ محتوای decode‌شده JSON و فشرده‌سازی انتقال Brotli است.</li>
       </ul>
     </div>
 
-    <div style="margin-top:10px"><span class="label blue">Payload (خلاصه):</span> حاوی لینک‌های <code>usercontent.google.com</code>، ابعاد تصویر (مثلاً 1080×2284) و داده‌های مالک 🟢</div>
+    <div style="margin-top:10px"><span class="label blue">Payload (خلاصه):</span> حاوی ارجاع‌های رسانه، ابعاد تصویر و فرادادهٔ موردنیاز 🟢</div>
 
     <div style="margin-top:12px"><strong>توصیه‌ها:</strong>
       <ul>
