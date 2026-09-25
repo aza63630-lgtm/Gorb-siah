@@ -2,6 +2,7 @@
 
 from html.parser import HTMLParser
 from pathlib import Path
+import re
 import subprocess
 import sys
 import tempfile
@@ -78,6 +79,46 @@ class StaticContentTests(unittest.TestCase):
         for event in ("documentChange", "ADD", "CURRENT", "REMOVE", "noop"):
             with self.subTest(event=event):
                 self.assertIn(event, summary)
+
+    def test_firestore_summary_contains_all_supplied_metrics_and_timestamps(self):
+        summary = FIRESTORE_SUMMARY.read_text(encoding="utf-8")
+
+        for value in (
+            "total_wins",
+            "base_currency.money_saved",
+            "preferred_currency.money_saved",
+            "trips_avoided",
+            "۳۲۸",
+            "۲۸",
+            "۱۰۵۸٫۷۱",
+            "۲۰۲۶-۰۴-۱۳",
+            "۲۰۲۶-۰۹-۲۵",
+            "12:46:04.953988",
+            "09:47:51.826685",
+            "19:29:40.620676",
+            "19:29:41.123784",
+            "دوشنبه",
+            "جمعه",
+        ):
+            with self.subTest(value=value):
+                self.assertIn(value, summary)
+
+        self.assertIn("نه مبلغ جایزه", summary)
+
+    def test_firestore_summary_lists_every_shared_target(self):
+        summary = FIRESTORE_SUMMARY.read_text(encoding="utf-8")
+        match = re.search(
+            r"همهٔ ۱۰۷ شناسهٔ target.*?<p><code>(.*?)</code></p>",
+            summary,
+            re.DOTALL,
+        )
+
+        self.assertIsNotNone(match)
+        target_ids = [int(value) for value in match.group(1).split(", ")]
+        self.assertEqual(107, len(target_ids))
+        self.assertEqual(107, len(set(target_ids)))
+        self.assertEqual([2, 4, 6, 8, 10, 12, 14], target_ids[:7])
+        self.assertEqual([240, 242, 244, 246, 248, 250], target_ids[-6:])
 
     def test_summaries_do_not_contain_sensitive_capture_data(self):
         contents = "\n".join(
