@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>خلاصهٔ جریان Firestore Listen</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, 'Segoe UI', Tahoma, sans-serif; }
+    body { margin: 0; padding: 24px; background: #f7f9fc; color: #172033; line-height: 1.7; }
+    main { max-width: 900px; margin: 0 auto; padding: 24px; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px rgba(17, 24, 39, .08); }
+    h1, h2 { margin-top: 0; }
+    h2 { margin-bottom: 8px; font-size: 1.1rem; color: #1558a6; }
+    section { margin-top: 22px; }
+    .status { display: inline-block; padding: 2px 10px; border-radius: 999px; background: #e7f6ec; color: #237a3b; font-weight: 700; }
+    .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+    .metric { padding: 14px; border: 1px solid #dce4ef; border-radius: 8px; background: #fbfcfe; }
+    .metric strong { display: block; font-size: 1.35rem; color: #1558a6; }
+    code { padding: 2px 5px; border-radius: 4px; background: #eef2f7; direction: ltr; unicode-bidi: isolate; }
+    .warning { padding: 12px 14px; border-right: 4px solid #d97706; background: #fff7e6; }
+    ul { margin: 6px 0; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>خلاصهٔ جریان بلادرنگ Firestore</h1>
+    <p><span class="status">جریان سالم</span> پیام‌ها یک چرخهٔ عادی همگام‌سازی listener را نشان می‌دهند.</p>
+
+    <section>
+      <h2>دادهٔ برنامه</h2>
+      <div class="metrics">
+        <div class="metric"><span>بردها</span><strong>۳۲۸</strong></div>
+        <div class="metric"><span>سفرهای حذف‌شده</span><strong>۲۸</strong></div>
+        <div class="metric"><span>صرفه‌جویی ثبت‌شده</span><strong>۱۰۵۸٫۷۱</strong></div>
+      </div>
+      <p>مقدار صرفه‌جویی در ارز پایه و ارز ترجیحی یکسان گزارش شده است.</p>
+    </section>
+
+    <section>
+      <h2>چرخهٔ listenerها</h2>
+      <ul>
+        <li>یک <code>documentChange</code>، snapshot سند را برای target فعال تحویل می‌دهد.</li>
+        <li>پیام‌های <code>ADD</code> ثبت listenerهای جدید را تأیید می‌کنند.</li>
+        <li>پیام‌های <code>CURRENT</code> یعنی نتایج target تا زمان خواندن اعلام‌شده کامل هستند.</li>
+        <li>پیام‌های <code>REMOVE</code> پایان listenerهای کوتاه‌عمر را نشان می‌دهند.</li>
+        <li>پیام <code>noop</code> heartbeat اتصال است و خطا محسوب نمی‌شود.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>تفسیر فنی</h2>
+      <p>عددهای میان بلوک‌ها به‌احتمال زیاد طول frameهای WebChannel هستند؛ شناسه‌های متوالی نیز ترتیب پیام‌ها را حفظ می‌کنند. یک تغییر target بدون نوع، resume token مشترک را برای مجموعه‌ای از targetهای فعال به‌روزرسانی می‌کند.</p>
+    </section>
+
+    <section class="warning">
+      <strong>حریم خصوصی:</strong>
+      مسیر کامل سند، شناسهٔ کاربر، شناسهٔ پروژه و resume tokenها عمداً در این خلاصه ذخیره نشده‌اند. این مقادیر نباید وارد گزارش عمومی یا log دائمی شوند.
+    </section>
+  </main>
+</body>
+</html>

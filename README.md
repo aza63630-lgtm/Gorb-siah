@@ -1,14 +1,15 @@
 # Gorb-siah
 
-A small, static summary of a Chrome DevTools network-analysis example.
+Static, privacy-preserving summaries of Chrome DevTools network captures.
 
 ## Contents
 
-- `devtools_batchexecute_summary.html` — a Persian, right-to-left visual summary of the captured request.
+- `devtools_firestore_listen_summary.html` — a Persian, right-to-left summary of a Firestore Listen stream; published as the site index.
+- `devtools_batchexecute_summary.html` — a Persian, right-to-left summary of a Google Photos batch request.
 
-## Validation
+Raw document paths, account identifiers, direct media URLs, and resume tokens are intentionally excluded.
 
-Run the static-content checks locally with:
+## Validation and build
 
 ```sh
 PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -v
