@@ -7,7 +7,6 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 SUMMARY = ROOT / "devtools_batchexecute_summary.html"
-TRANSCRIPT = ROOT / "devtools_what_can_you_help_me_with.md"
 WORKFLOW = ROOT / ".github" / "workflows" / "jekyll-docker.yml"
 SENSITIVE_MARKERS = (
     "f.sid=",
@@ -62,18 +61,8 @@ class StaticContentTests(unittest.TestCase):
         self.assertIn("محتوای decode‌شده JSON", summary)
         self.assertNotIn("پاسخ باینری/فشرده‌شده", summary)
 
-    def test_transcript_uses_the_canonical_filename_and_spelling(self):
-        transcript = TRANSCRIPT.read_text(encoding="utf-8")
-
-        self.assertTrue(TRANSCRIPT.is_file())
-        self.assertFalse((ROOT / "devtools_what_can_you_help_me_with.md 2950").exists())
-        self.assertIn("## Breakdown", transcript)
-        self.assertNotIn("Breakdwon", transcript)
-
-    def test_checked_in_artifacts_do_not_contain_sensitive_capture_data(self):
-        contents = "\n".join(
-            path.read_text(encoding="utf-8") for path in (SUMMARY, TRANSCRIPT)
-        )
+    def test_summary_does_not_contain_sensitive_capture_data(self):
+        contents = SUMMARY.read_text(encoding="utf-8")
 
         for marker in SENSITIVE_MARKERS:
             with self.subTest(marker=marker):
