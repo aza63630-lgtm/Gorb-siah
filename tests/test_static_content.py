@@ -105,6 +105,24 @@ class StaticContentTests(unittest.TestCase):
 
         self.assertIn("نه مبلغ جایزه", summary)
 
+    def test_firestore_summary_does_not_invent_ticket_or_draw_details(self):
+        summary = FIRESTORE_SUMMARY.read_text(encoding="utf-8")
+
+        for label in (
+            "مبلغ جایزه",
+            "تاریخ مبلغ/جایزه",
+            "شناسهٔ بلیط",
+            "تاریخ قرعه‌کشی",
+            "نوع قرعه‌کشی",
+            "نام قرعه‌کشی",
+        ):
+            with self.subTest(label=label):
+                self.assertRegex(summary, rf"{re.escape(label)}(?:</td><td>|: )موجود نیست")
+
+        self.assertIn("واحد ارز مشخص نشده", summary)
+        self.assertIn("updateTime</code> فقط زمان آخرین به‌روزرسانی کل سند", summary)
+        self.assertIn("خلاصهٔ قابل کپی", summary)
+
     def test_firestore_summary_lists_every_shared_target(self):
         summary = FIRESTORE_SUMMARY.read_text(encoding="utf-8")
         match = re.search(
