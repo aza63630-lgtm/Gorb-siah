@@ -17,6 +17,10 @@ The assistant can help inspect layout, network activity, performance, source cod
 - **Response:** The decoded payload was JSON and the transfer encoding was Brotli (`br`).
 - **Caching:** The response used `Cache-Control: no-store`, so the browser must request fresh metadata rather than retaining it in its cache.
 
+## Lottery-data completeness
+
+The sanitized capture contains no readable lottery-ticket or official drawing data. The standalone HTML summary therefore provides one complete, horizontally scrollable ledger for ticket and draw identifiers, every relevant date, ticket and winning balls, bonus or multiplier details, match and prize tier, ticket price, jackpot, gross winnings, deductions, net winnings and currency, and payment status. Its single placeholder row makes the missing source data explicit rather than inventing values. A legible ticket image and the official drawing result are required to populate it. Redeemable barcodes and claim credentials should remain private.
+
 ## Breakdown
 
 The largest portion of the observed request time was the server wait. Because this endpoint belongs to an external service, backend processing time cannot be corrected by this repository; consumers should avoid treating the captured latency as a local application defect.
